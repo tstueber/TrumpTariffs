@@ -1,0 +1,2110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Interactive Global Tariff Map</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map { height: 100vh; }
+    .legend {
+      background: white;
+      padding: 10px;
+      line-height: 18px;
+      color: #555;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+    }
+    .legend i {
+      width: 18px;
+      height: 18px;
+      float: left;
+      margin-right: 8px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const tariffData = {
+  "Afghanistan": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 49,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Albania": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Algeria": {
+    "tariff_rate": 30,
+    "tariff_charged_to_us": 59,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Andorra": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Angola": {
+    "tariff_rate": 32,
+    "tariff_charged_to_us": 63,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Anguilla": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Antigua and Barbuda": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Argentina": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "Steel",
+      "Aluminum",
+      "Soybeans"
+    ],
+    "companies": [
+      "Tenaris",
+      "Ternium",
+      "Molinos"
+    ]
+  },
+  "Armenia": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Aruba": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Azerbaijan": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Bahamas": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Bangladesh": {
+    "tariff_rate": 37,
+    "tariff_charged_to_us": 74,
+    "impacted_goods": [
+      "Apparel",
+      "Textiles",
+      "Home Textiles"
+    ],
+    "companies": [
+      "Gap (GPS)",
+      "PVH Corp (PVH)",
+      "Hanesbrands (HBI)"
+    ]
+  },
+  "Barbados": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Belize": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Benin": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Bermuda": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Bhutan": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Bosnia and Herzegovina": {
+    "tariff_rate": 35,
+    "tariff_charged_to_us": 70,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Botswana": {
+    "tariff_rate": 37,
+    "tariff_charged_to_us": 74,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Brazil": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "Steel",
+      "Aircraft",
+      "Aluminum"
+    ],
+    "companies": [
+      "Embraer (ERJ)",
+      "Gerdau (GGB)",
+      "Vale (VALE)"
+    ]
+  },
+  "British Indian Ocean Territory": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "British Virgin Islands": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Brunei": {
+    "tariff_rate": 24,
+    "tariff_charged_to_us": 47,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Burundi": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Cabo Verde": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Cambodia": {
+    "tariff_rate": 49,
+    "tariff_charged_to_us": 97,
+    "impacted_goods": [
+      "Apparel",
+      "Footwear",
+      "Textiles"
+    ],
+    "companies": [
+      "Tapestry (TPR)",
+      "VF Corp (VFC)",
+      "Abercrombie & Fitch (ANF)"
+    ]
+  },
+  "Cameroon": {
+    "tariff_rate": 11,
+    "tariff_charged_to_us": 22,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Cayman Islands": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Central African Republic": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Chad": {
+    "tariff_rate": 13,
+    "tariff_charged_to_us": 26,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "China": {
+    "tariff_rate": 145,
+    "tariff_charged_to_us": 125,
+    "impacted_goods": [
+      "Electronics",
+      "Apparel",
+      "Toys"
+    ],
+    "companies": [
+      "Apple (AAPL)",
+      "Nike (NKE)",
+      "Tesla (TSLA)"
+    ]
+  },
+  "Christmas Island": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Cocos (Keeling) Islands": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Comoros": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Cook Islands": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "C\u00f4te d\u2019Ivoire": {
+    "tariff_rate": 21,
+    "tariff_charged_to_us": 41,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Cura\u00e7ao": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Democratic Republic of the Congo": {
+    "tariff_rate": 11,
+    "tariff_charged_to_us": 22,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Djibouti": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Dominica": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Ecuador": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 12,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Egypt": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "Steel",
+      "Chemicals",
+      "Textiles"
+    ],
+    "companies": [
+      "Ezz Steel",
+      "Elsewedy Electric",
+      "Juhayna"
+    ]
+  },
+  "Equatorial Guinea": {
+    "tariff_rate": 13,
+    "tariff_charged_to_us": 25,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Eritrea": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Eswatini": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Ethiopia": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "European Union": {
+    "tariff_rate": 20,
+    "tariff_charged_to_us": 39,
+    "impacted_goods": [
+      "Automobiles",
+      "Wine",
+      "Cheese"
+    ],
+    "companies": [
+      "Volkswagen (VWAGY)",
+      "Nestl\u00e9 (NSRGY)",
+      "LVMH (LVMUY)"
+    ]
+  },
+  "Falkland Islands": {
+    "tariff_rate": 41,
+    "tariff_charged_to_us": 82,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Fiji": {
+    "tariff_rate": 32,
+    "tariff_charged_to_us": 63,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "French Guiana": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "French Polynesia": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Gabon": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Gambia": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Georgia": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Ghana": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 17,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Gibraltar": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Grenada": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Guadeloupe": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Guinea-Bissau": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Guinea": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Guyana": {
+    "tariff_rate": 38,
+    "tariff_charged_to_us": 76,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Haiti": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Heard and Mcdonald Islands": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Iceland": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "India": {
+    "tariff_rate": 26,
+    "tariff_charged_to_us": 52,
+    "impacted_goods": [
+      "Textiles",
+      "Pharmaceuticals",
+      "Jewelry"
+    ],
+    "companies": [
+      "Apple (AAPL)",
+      "Ford (F)",
+      "Cummins (CMI)"
+    ]
+  },
+  "Indonesia": {
+    "tariff_rate": 32,
+    "tariff_charged_to_us": 64,
+    "impacted_goods": [
+      "Apparel",
+      "Footwear",
+      "Furniture"
+    ],
+    "companies": [
+      "Freeport-McMoRan (FCX)",
+      "Chevron (CVX)",
+      "ExxonMobil (XOM)"
+    ]
+  },
+  "Iran": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Iraq": {
+    "tariff_rate": 39,
+    "tariff_charged_to_us": 78,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Israel": {
+    "tariff_rate": 17,
+    "tariff_charged_to_us": 33,
+    "impacted_goods": [
+      "Medical Devices",
+      "Pharma",
+      "Defense Tech"
+    ],
+    "companies": [
+      "Teva (TEVA)",
+      "Check Point (CHKP)",
+      "Elbit Systems (ESLT)"
+    ]
+  },
+  "Jamaica": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Japan": {
+    "tariff_rate": 24,
+    "tariff_charged_to_us": 46,
+    "impacted_goods": [
+      "Automobiles",
+      "Electronics",
+      "Machinery"
+    ],
+    "companies": [
+      "Toyota (TM)",
+      "Sony (SONY)",
+      "Honda (HMC)"
+    ]
+  },
+  "Kazakhstan": {
+    "tariff_rate": 27,
+    "tariff_charged_to_us": 54,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Kenya": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Kiribati": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Kosovo": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Kuwait": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Kyrgyzstan": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Laos": {
+    "tariff_rate": 48,
+    "tariff_charged_to_us": 95,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Lebanon": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Lesotho": {
+    "tariff_rate": 50,
+    "tariff_charged_to_us": 99,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Liberia": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Libya": {
+    "tariff_rate": 31,
+    "tariff_charged_to_us": 61,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Liechtenstein": {
+    "tariff_rate": 37,
+    "tariff_charged_to_us": 73,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Madagascar": {
+    "tariff_rate": 47,
+    "tariff_charged_to_us": 93,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Malawi": {
+    "tariff_rate": 17,
+    "tariff_charged_to_us": 34,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Malaysia": {
+    "tariff_rate": 24,
+    "tariff_charged_to_us": 47,
+    "impacted_goods": [
+      "Solar Panels",
+      "Electronics",
+      "Machinery"
+    ],
+    "companies": [
+      "First Solar",
+      "JinkoSolar",
+      "Flextronics"
+    ]
+  },
+  "Maldives": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Mali": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Marshall Islands": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Martinique": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Mauritania": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Mauritius": {
+    "tariff_rate": 40,
+    "tariff_charged_to_us": 80,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Mayotte": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Micronesia": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Moldova": {
+    "tariff_rate": 31,
+    "tariff_charged_to_us": 61,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Monaco": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Mongolia": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Montenegro": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Monteserrat": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Mozambique": {
+    "tariff_rate": 16,
+    "tariff_charged_to_us": 31,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Myanmar (Burma)": {
+    "tariff_rate": 44,
+    "tariff_charged_to_us": 88,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Namibia": {
+    "tariff_rate": 21,
+    "tariff_charged_to_us": 42,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Nauru": {
+    "tariff_rate": 30,
+    "tariff_charged_to_us": 59,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Nepal": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "New Zealand": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 20,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Nicaragua": {
+    "tariff_rate": 18,
+    "tariff_charged_to_us": 36,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Niger": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Nigeria": {
+    "tariff_rate": 14,
+    "tariff_charged_to_us": 27,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Norfolk Island": {
+    "tariff_rate": 29,
+    "tariff_charged_to_us": 58,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "North Macedonia": {
+    "tariff_rate": 33,
+    "tariff_charged_to_us": 65,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Norway": {
+    "tariff_rate": 15,
+    "tariff_charged_to_us": 30,
+    "impacted_goods": [
+      "Aluminum",
+      "Steel",
+      "Machinery"
+    ],
+    "companies": [
+      "Hydro",
+      "Elkem",
+      "Kongsberg Gruppen"
+    ]
+  },
+  "Oman": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Pakistan": {
+    "tariff_rate": 29,
+    "tariff_charged_to_us": 58,
+    "impacted_goods": [
+      "Textiles",
+      "Garments",
+      "Sporting Goods"
+    ],
+    "companies": [
+      "Hanesbrands (HBI)",
+      "PVH Corp (PVH)",
+      "Adidas (ADDYY)"
+    ]
+  },
+  "Panama": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Papua New Guinea": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 15,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Paraguay": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Peru": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Philippines": {
+    "tariff_rate": 17,
+    "tariff_charged_to_us": 34,
+    "impacted_goods": [
+      "Electronics",
+      "Textiles",
+      "BPO Services"
+    ],
+    "companies": [
+      "PLDT",
+      "Universal Robina",
+      "AboitizPower"
+    ]
+  },
+  "Qatar": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Republic of the Congo": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "R\u00e9union": {
+    "tariff_rate": 37,
+    "tariff_charged_to_us": 73,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Rwanda": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Saint Helena": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 15,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Saint Kitts and Nevis": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Saint Lucia": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Saint Pierre and Miequelon": {
+    "tariff_rate": 50,
+    "tariff_charged_to_us": 99,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Saint Vincent and the Grenadines": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Samoa": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "San Marino": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "S\u00e3o Tom\u00e9 and Pr\u00edncipe": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Saudi Arabia": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Senegal": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Serbia": {
+    "tariff_rate": 37,
+    "tariff_charged_to_us": 74,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Sierra Leone": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Singapore": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "Electronics",
+      "Chemicals",
+      "Financial Services"
+    ],
+    "companies": [
+      "Flex (FLEX)",
+      "Seagate (STX)",
+      "DBS Group"
+    ]
+  },
+  "Sint Maarten": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Solomon Islands": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "South Africa": {
+    "tariff_rate": 30,
+    "tariff_charged_to_us": 60,
+    "impacted_goods": [
+      "Minerals",
+      "Auto Parts",
+      "Wine"
+    ],
+    "companies": [
+      "Sibanye Stillwater (SBSW)",
+      "Sasol (SSL)",
+      "Gold Fields (GFI)"
+    ]
+  },
+  "South Sudan": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Sri Lanka": {
+    "tariff_rate": 44,
+    "tariff_charged_to_us": 88,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Sudan": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Suriname": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Svalbard and Jan Mayen": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Switzerland": {
+    "tariff_rate": 31,
+    "tariff_charged_to_us": 61,
+    "impacted_goods": [
+      "Pharmaceuticals",
+      "Watches",
+      "Machinery"
+    ],
+    "companies": [
+      "Nestl\u00e9 (NSRGY)",
+      "Novartis (NVS)",
+      "Credit Suisse (CS)"
+    ]
+  },
+  "Syria": {
+    "tariff_rate": 41,
+    "tariff_charged_to_us": 81,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Taiwan": {
+    "tariff_rate": 32,
+    "tariff_charged_to_us": 64,
+    "impacted_goods": [
+      "Semiconductors",
+      "Electronics",
+      "Machinery"
+    ],
+    "companies": [
+      "TSMC (TSM)",
+      "Foxconn (HNHPF)",
+      "Acer (ACEYY)"
+    ]
+  },
+  "Tajikistan": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Tanzania": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Thailand": {
+    "tariff_rate": 36,
+    "tariff_charged_to_us": 72,
+    "impacted_goods": [
+      "Auto Parts",
+      "Electronics",
+      "Seafood"
+    ],
+    "companies": [
+      "Ford (F)",
+      "GM (GM)",
+      "Honeywell (HON)"
+    ]
+  },
+  "Timor-Leste": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Togo": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Tokelau": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Tonga": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Trinidad and Tobago": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 12,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Tunisia": {
+    "tariff_rate": 28,
+    "tariff_charged_to_us": 55,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Turkey": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "Steel",
+      "Aluminum",
+      "Apparel"
+    ],
+    "companies": [
+      "Erdemir",
+      "Kardemir",
+      "Vestel"
+    ]
+  },
+  "Turkmenistan": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Turks and Caicos Islands": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Tuyalu": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Uganda": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 20,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Ukraine": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "Steel",
+      "Grains",
+      "Sunflower Oil"
+    ],
+    "companies": [
+      "Ferrexpo",
+      "Kernel Holding",
+      "Myronivsky Hliboproduct"
+    ]
+  },
+  "United Arab Emirates": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "United Kingdom": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "Automobiles",
+      "Pharma",
+      "Spirits"
+    ],
+    "companies": [
+      "AstraZeneca (AZN)",
+      "Diageo (DEO)",
+      "Unilever (UL)"
+    ]
+  },
+  "Uruguay": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Uzbekistan": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Vanuatu": {
+    "tariff_rate": 22,
+    "tariff_charged_to_us": 44,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Venezuela": {
+    "tariff_rate": 15,
+    "tariff_charged_to_us": 29,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Yemen": {
+    "tariff_rate": 10,
+    "tariff_charged_to_us": 10,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Zambia": {
+    "tariff_rate": 17,
+    "tariff_charged_to_us": 33,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Zimbabwe": {
+    "tariff_rate": 18,
+    "tariff_charged_to_us": 35,
+    "impacted_goods": [
+      "TBD"
+    ],
+    "companies": [
+      "TBD"
+    ]
+  },
+  "Mexico": {
+  "tariff_rate": 10,
+  "tariff_charged_to_us": 10,
+  "usmca_exempt": true,
+  "conditional_tariff": 25,
+  "impacted_goods": ["Automobiles", "Avocados", "Electronics"],
+  "exempted_goods": ["Automobiles", "Avocados"],
+  "companies": ["Grupo Bimbo", "Cemex", "Nemak"]
+},
+"Canada": {
+  "tariff_rate": 10,
+  "tariff_charged_to_us": 10,
+  "usmca_exempt": true,
+  "conditional_tariff": 25,
+  "impacted_goods": ["Oil", "Lumber", "Autos"],
+  "exempted_goods": ["Autos", "Lumber"],
+  "companies": ["Suncor Energy", "Magna International", "Canfor"]
+},
+"Russia": {
+  "tariff_rate": 0,
+  "tariff_charged_to_us": 40,
+  "impacted_goods": ["Oil", "Gas", "Metals"],
+  "companies": ["Gazprom", "Rosneft", "Norilsk Nickel"]
+},
+"Vietnam": {
+  "tariff_rate": 46,
+  "tariff_charged_to_us": 93,
+  "impacted_goods": ["Apparel", "Footwear", "Electronics"],
+  "companies": ["Vingroup", "PV Power", "FPT Corporation"]
+},
+"Hong Kong": {
+  "tariff_rate": 20,
+  "tariff_charged_to_us": 40,
+  "impacted_goods": ["Electronics", "Jewelry", "Finance Services"],
+  "companies": ["Li & Fung", "Sino Group", "AIA Group"]
+},
+"Morocco": {
+  "tariff_rate": 10,
+  "tariff_charged_to_us": 10,
+  "fta_exempt": true,
+  "impacted_goods": ["TBD"],
+  "exempted_goods": ["TBD"],
+  "companies": ["TBD"]
+},
+"South Korea": {
+  "tariff_rate": 25,
+  "tariff_charged_to_us": 50,
+  "fta_exempt": true,
+  "impacted_goods": ["Automobiles", "Electronics", "Steel"],
+  "exempted_goods": ["Electronics", "Steel"],
+  "companies": ["Samsung (SSNLF)", "Hyundai (HYMTF)", "LG (LGEAF)"]
+},
+"El Salvador": {
+  "tariff_rate": 10,
+  "tariff_charged_to_us": 10,
+  "fta_exempt": true,
+  "impacted_goods": ["TBD"],
+  "exempted_goods": ["Agricultural, apparel, and industrial goods"],
+  "companies": ["TBD"]
+},
+"Guatemala": {
+  "tariff_rate": 10,
+  "tariff_charged_to_us": 10,
+  "fta_exempt": true,
+  "impacted_goods": ["TBD"],
+  "exempted_goods": ["Agricultural, apparel, and industrial goods"],
+  "companies": ["TBD"]
+},
+"Honduras": {
+  "tariff_rate": 10,
+  "tariff_charged_to_us": 10,
+  "fta_exempt": true,
+  "impacted_goods": ["TBD"],
+  "exempted_goods": ["Agricultural, apparel, and industrial goods"],
+  "companies": ["TBD"]
+},
+"Nicaragua": {
+  "tariff_rate": 18,
+  "tariff_charged_to_us": 36,
+  "fta_exempt": true,
+  "impacted_goods": ["TBD"],
+  "exempted_goods": ["Agricultural, apparel, and industrial goods"],
+  "companies": ["TBD"]
+},
+"Costa Rica": {
+  "tariff_rate": 10,
+  "tariff_charged_to_us": 17,
+  "fta_exempt": true,
+  "impacted_goods": ["TBD"],
+  "exempted_goods": ["Agricultural, apparel, and industrial goods"],
+  "companies": ["TBD"]
+},
+"Dominican Republic": {
+  "tariff_rate": 10,
+  "tariff_charged_to_us": 10,
+  "fta_exempt": true,
+  "impacted_goods": ["TBD"],
+  "exempted_goods": ["Agricultural, apparel, and industrial goods"],
+  "companies": ["TBD"]
+},
+"Jordan": {
+  "tariff_rate": 20,
+  "tariff_charged_to_us": 40,
+  "fta_exempt": true,
+  "impacted_goods": ["TBD"],
+  "exempted_goods": ["Full Exemption"],
+  "companies": ["TBD"]
+},
+"Australia": {
+  "tariff_rate": 10,
+  "tariff_charged_to_us": 10,
+  "fta_exempt": true,
+  "impacted_goods": ["Minerals", "Beef", "Wine"],
+  "exempted_goods": ["Beef", "Wine", "Industrial and agricultural goods often enter tariff-free."],
+  "companies": ["BHP (BHP)", "Rio Tinto (RIO)", "Treasury Wine Estates"]
+},
+"Bahrain": {
+  "tariff_rate": 10,
+  "tariff_charged_to_us": 10,
+  "fta_exempt": true,
+  "impacted_goods": ["TBD"],
+  "exempted_goods": ["Broad coverage for goods; part of U.S. strategy for economic ties in the Gulf."],
+  "companies": ["TBD"]
+},
+"Singapore": {
+  "tariff_rate": 10,
+  "tariff_charged_to_us": 10,
+  "fta_exempt": true,
+  "impacted_goods": ["Electronics", "Chemicals", "Financial Services"],
+  "exempted_goods": ["Electronics", "Chemicals", "Most goods qualify for duty-free status if meeting origin rules."],
+  "companies": ["Flex (FLEX)", "Seagate (STX)", "DBS Group"]
+},
+"Chile": {
+  "tariff_rate": 10,
+  "tariff_charged_to_us": 10,
+  "fta_exempt": true,
+  "impacted_goods": ["TBD"],
+  "exempted_goods": ["All thanks to FTA"],
+  "companies": ["TBD"]
+},
+"Panama": {
+  "tariff_rate": 10,
+  "tariff_charged_to_us": 10,
+  "fta_exempt": true,
+  "impacted_goods": ["TBD"],
+  "exempted_goods": ["Agricultural and industrial goods often qualify."],
+  "companies": ["TBD"]
+},
+"Peru": {
+  "tariff_rate": 10,
+  "tariff_charged_to_us": 10,
+  "fta_exempt": true,
+  "impacted_goods": ["TBD"],
+  "exempted_goods": ["Agricultural and industrial goods often qualify."],
+  "companies": ["TBD"]
+},
+"Colombia": {
+  "tariff_rate": 10,
+  "tariff_charged_to_us": 10,
+  "fta_exempt": true,
+  "impacted_goods": ["TBD"],
+  "exempted_goods": ["Agricultural and industrial goods often qualify."],
+  "companies": ["TBD"]
+}
+
+};
+
+    const getColor = (rate) => {
+      if (!rate || rate === 0) return '#ffffff'; // White for no data
+      if (rate > 100) return '#800000'; // Maroon
+      if (rate > 50) return '#800000';
+      if (rate > 40) return '#b30000'; // Red
+      if (rate > 30) return '#d7301f'; // Darker Red
+      if (rate > 20) return '#fc8d59'; // Light Red
+      if (rate > 10) return '#fdcc8a'; // Darker Orange
+      return '#fee8c8'; // Light Orange
+    };
+
+    const map = L.map('map').setView([20, 0], 2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    let geojson;
+
+    fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
+      .then(res => res.json())
+      .then(geoData => {
+        geojson = L.geoJSON(geoData, {
+          style: feature => {
+            const country = feature.properties.name;
+            const data = tariffData[country] || {};
+            const hasExemption = data.usmca_exempt || data.fta_exempt;
+            return {
+              color: '#000',
+              weight: 1,
+              fillColor: getColor(data.tariff_rate),
+              fillOpacity: 0.7,
+              dashArray: hasExemption ? '4, 4' : null
+            };
+          },
+          onEachFeature: (feature, layer) => {
+            const country = feature.properties.name;
+            const data = tariffData[country];
+
+            layer.on({
+              mouseover: function (e) {
+                e.target.setStyle({
+                  weight: 3,
+                  color: '#666',
+                  fillOpacity: 0.9
+                });
+                layer.bringToFront();
+              },
+              mouseout: function (e) {
+                geojson.resetStyle(e.target);
+              },
+              click: function () {
+                if (data) {
+                  const exemptionText = data.usmca_exempt
+                    ? 'USMCA treaty exemption applies to some goods'
+                    : data.fta_exempt
+                    ? 'FTA exemption applies to some goods'
+                    : '';
+
+                  const exemptedGoodsText = data.exempted_goods && data.exempted_goods.length > 0
+                    ? `<p><strong>Exempted Goods:</strong> ${data.exempted_goods.join(", ")}</p>`
+                    : '';
+
+                  const popupContent = `
+                    <div>
+                      <h3>${country}</h3>
+                      <p><strong>Tariff Rate:</strong> ${data.tariff_rate}%</p>
+                      <p><strong>Impacted Goods:</strong> ${data.impacted_goods.join(", ")}</p>
+                      <p><strong>Companies:</strong> ${data.companies.join(", ")}</p>
+                      ${exemptionText ? `<p><em>${exemptionText}</em></p>` : ''}
+                      ${exemptedGoodsText}
+                    </div>
+                  `;
+                  layer.bindPopup(popupContent).openPopup();
+                } else {
+                  layer.bindPopup(`<h3>${country}</h3><p>No data available.</p>`).openPopup();
+                }
+              }
+            });
+          }
+        }).addTo(map);
+
+        const legend = L.control({ position: 'bottomright' });
+
+        legend.onAdd = function () {
+          const div = L.DomUtil.create('div', 'info legend');
+          const grades = [0, 10, 20, 30, 40, 50, 100];
+          const labels = [];
+
+          for (let i = 0; i < grades.length; i++) {
+            const from = grades[i];
+            const to = grades[i + 1];
+            labels.push(
+              `<i style="background:${getColor(from + 1)}"></i> ${from}${to ? `–${to}` : '+'}%`
+            );
+          }
+
+          labels.push(
+            '<hr><i style="border:1px dashed #000; width: 18px; height: 10px; display:inline-block;"></i> Treaty exemption (USMCA/FTA)'
+          );
+
+          div.innerHTML = '<h4>Tariff Rate</h4>' + labels.join('<br>');
+          return div;
+        };
+
+        legend.addTo(map);
+      });
+  </script>
+</body>
+</html>
